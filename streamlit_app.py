@@ -21,6 +21,43 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
+# 암호 인증 기능
+def check_password():
+    """암호 입력 확인"""
+    if "password_correct" not in st.session_state:
+        st.session_state.password_correct = False
+    
+    if st.session_state.password_correct:
+        return True
+    
+    # 암호 입력 페이지
+    st.title("🔐 접근 권한")
+    st.markdown("---")
+    
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.subheader("암호를 입력하세요")
+        password = st.text_input(
+            "암호",
+            type="password",
+            placeholder="숫자로 입력하세요"
+        )
+        
+        if st.button("입력", use_container_width=True):
+            if password == "0708":
+                st.session_state.password_correct = True
+                st.success("✅ 접근 승인되었습니다!")
+                st.rerun()
+            else:
+                st.error("❌ 암호가 잘못되었습니다.")
+    
+    st.stop()
+
+
+# 암호 확인
+check_password()
+
+
 def load_keywords():
     """키워드 파일에서 검색어를 불러옵니다."""
     try:
