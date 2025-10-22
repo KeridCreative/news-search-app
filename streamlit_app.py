@@ -67,11 +67,9 @@ def load_keywords():
     except:
         return ['乃木坂', '櫻坂', '日向坂', 'AKB', 'HKT']
 
-
 def format_date_japanese(date):
     """日付をM/D形式に変換します。"""
     return f"{date.month}/{date.day}"
-
 
 def get_date_range(days_ago):
     """指定された日付範囲を返します。"""
@@ -79,7 +77,6 @@ def get_date_range(days_ago):
         return [datetime.date.today() - datetime.timedelta(days=i) for i in range(7)]
     else:
         return [datetime.date.today() - datetime.timedelta(days=int(days_ago))]
-
 
 def scrape_yahoo_news(keyword, days_ago='0'):
     """Yahooニュースジャパンでキーワードを検索します。"""
@@ -129,7 +126,6 @@ def scrape_yahoo_news(keyword, days_ago='0'):
     
     found_articles.sort(key=lambda x: x['publish_time'], reverse=True)
     return found_articles
-
 
 def scrape_prtimes(keyword, days_ago='0'):
     """PR Timesでキーワードを検索します。"""
@@ -207,7 +203,6 @@ def scrape_prtimes(keyword, days_ago='0'):
     
     found_articles.sort(key=lambda x: x['publish_time'], reverse=True)
     return found_articles
-
 
 def display_articles(articles):
     """記事リストを表示します。"""
