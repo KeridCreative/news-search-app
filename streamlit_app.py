@@ -103,13 +103,13 @@ def scrape_yahoo_news(keyword, days_ago='0'):
             
             article_date = None
             try:
-                # Try YYYY/M/D format first
-                if re.search(r'^\d{4}/\d{1,2}/\d{1,2}$', date_text):
-                    article_date = datetime.datetime.strptime(date_text, '%Y/%m/%d').date()
-                # If only M/D, assume current year
-                elif re.search(r'^\d{1,2}/\d{1,2}$', date_text):
-                    article_date = datetime.datetime.strptime(f"{datetime.date.today().year}/{date_text}", '%Y/%m/%d').date()
-                # Handle "X時間前" or "X日前" if present in Yahoo News (less common than PR Times)
+                # New regex to extract M/D from "M/D(曜日) HH:MM"
+                match_md = re.search(r'(\d{1,2}/\d{1,2})', date_text)
+                if match_md:
+                    md_part = match_md.group(1)
+                    # Assume current year for M/D format
+                    article_date = datetime.datetime.strptime(f"{datetime.date.today().year}/{md_part}", '%Y/%m/%d').date()
+                # Keep existing logic for "X時間前" or "X日前" if they ever appear
                 elif '時間前' in date_text:
                     article_date = datetime.date.today()
                 elif '日前' in date_text:
@@ -277,7 +277,7 @@ with st.sidebar:
     source = source_options[source_selected][1]
 
     # Add version display
-    st.sidebar.markdown(f"**バージョン: 1.0.1**")
+    st.sidebar.markdown(f"**バージョン: 1.0.2**")
 
 # メインコンテンツ
 tab1, tab2, tab3 = st.tabs(["🔍 キーワード検索", "📝 新しいキーワード", "🌐 全体検索"])
