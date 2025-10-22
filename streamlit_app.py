@@ -87,7 +87,6 @@ def scrape_yahoo_news(keyword, days_ago='0'):
     
     found_articles = []
     target_dates = get_date_range(days_ago)
-    target_date_strs = [format_date_japanese(d) for d in target_dates]
     
     try:
         response = requests.get(url, headers=headers, timeout=10)
@@ -100,26 +99,43 @@ def scrape_yahoo_news(keyword, days_ago='0'):
             if not date_element:
                 continue
 
-            date_text = date_element.text
-            match = re.search(r'(\d{1,2}/\d{1,2})', date_text)
+            date_text = date_element.text.strip()
+            
+            article_date = None
+            try:
+                # Try YYYY/M/D format first
+                if re.search(r'^\d{4}/\d{1,2}/\d{1,2}$', date_text):
+                    article_date = datetime.datetime.strptime(date_text, '%Y/%m/%d').date()
+                # If only M/D, assume current year
+                elif re.search(r'^\d{1,2}/\d{1,2}$', date_text):
+                    article_date = datetime.datetime.strptime(f"{datetime.date.today().year}/{date_text}", '%Y/%m/%d').date()
+                # Handle "X時間前" or "X日前" if present in Yahoo News (less common than PR Times)
+                elif '時間前' in date_text:
+                    article_date = datetime.date.today()
+                elif '日前' in date_text:
+                    match_days_ago = re.search(r'(\d+)日前', date_text)
+                    if match_days_ago:
+                        days_before = int(match_days_ago.group(1))
+                        article_date = datetime.date.today() - datetime.timedelta(days=days_before)
 
-            if match:
-                if days_ago == '0':
-                    if match.group(1) not in target_date_strs:
-                        continue
+            except ValueError:
+                pass # Parsing failed, article_date remains None
+
+            if not article_date or article_date not in target_dates:
+                continue
                 
-                title_element = article.find('div', class_='sc-3ls169-0')
-                link_element = article.find('a')
-                media_element = article.find('span')
+            title_element = article.find('div', class_='sc-3ls169-0')
+            link_element = article.find('a')
+            media_element = article.find('span')
 
-                if title_element and link_element:
-                    found_articles.append({
-                        'title': title_element.text.strip(),
-                        'link': link_element.get('href', '#'),
-                        'media': media_element.text.strip() if media_element else 'N/A',
-                        'publish_time': date_text.strip(),
-                        'source': 'Yahoo News'
-                    })
+            if title_element and link_element:
+                found_articles.append({
+                    'title': title_element.text.strip(),
+                    'link': link_element.get('href', '#'),
+                    'media': media_element.text.strip() if media_element else 'N/A',
+                    'publish_time': date_text, # Keep original date_text for display
+                    'source': 'Yahoo News'
+                })
 
     except Exception as e:
         st.error(f"Yahooニュース検索エラー: {e}")
@@ -138,7 +154,6 @@ def scrape_prtimes(keyword, days_ago='0'):
     
     found_articles = []
     target_dates = get_date_range(days_ago)
-    target_date_strs = [format_date_japanese(d) for d in target_dates]
     
     try:
         response = requests.get(url, headers=headers, timeout=10)
@@ -157,28 +172,26 @@ def scrape_prtimes(keyword, days_ago='0'):
                 time_elem = link_elem.find('time')
                 time_text = time_elem.text.strip() if time_elem else ""
                 
-                date_text = ""
-                
-                if '年' in time_text:
+                article_date = None
+                if '年' in time_text: # YYYY年M月D日
                     match = re.search(r'(\d+)年(\d+)月(\d+)日', time_text)
                     if match:
                         year, month, day = int(match.group(1)), int(match.group(2)), int(match.group(3))
                         try:
-                            date_obj = datetime.date(year, month, day)
-                            date_text = format_date_japanese(date_obj)
+                            article_date = datetime.date(year, month, day)
                         except:
                             pass
                 elif '時間前' in time_text:
-                    date_text = format_date_japanese(datetime.date.today())
+                    article_date = datetime.date.today()
                 elif '日前' in time_text:
                     match = re.search(r'(\d+)日前', time_text)
                     if match:
                         days_before = int(match.group(1))
-                        date_text = format_date_japanese(datetime.date.today() - datetime.timedelta(days=days_before))
-                else:
-                    date_text = format_date_japanese(datetime.date.today())
+                        article_date = datetime.date.today() - datetime.timedelta(days=days_before)
+                else: # Default to today if no specific date info
+                    article_date = datetime.date.today()
                 
-                if not date_text or date_text not in target_date_strs:
+                if not article_date or article_date not in target_dates:
                     continue
                 
                 article = link_elem.parent
@@ -192,7 +205,7 @@ def scrape_prtimes(keyword, days_ago='0'):
                     'title': title,
                     'link': link if link.startswith('http') else f"https://prtimes.jp{link}",
                     'media': company,
-                    'publish_time': time_text,
+                    'publish_time': time_text, # Keep original time_text for display
                     'source': 'PR Times'
                 })
             except:
@@ -262,6 +275,9 @@ with st.sidebar:
         format_func=lambda i: source_options[i][0]
     )
     source = source_options[source_selected][1]
+
+    # Add version display
+    st.sidebar.markdown(f"**バージョン: 1.0.1**")
 
 # メインコンテンツ
 tab1, tab2, tab3 = st.tabs(["🔍 キーワード検索", "📝 新しいキーワード", "🌐 全体検索"])
