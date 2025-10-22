@@ -6,9 +6,9 @@ import re
 import json
 
 
-# 페이지 설정
+# ページ設定
 st.set_page_config(
-    page_title="📰 뉴스 검색기",
+    page_title="📰 ニュース検索",
     page_icon="📰",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -21,45 +21,45 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-# 암호 인증 기능
+# パスワード認証機能
 def check_password():
-    """암호 입력 확인"""
+    """パスワード入力確認"""
     if "password_correct" not in st.session_state:
         st.session_state.password_correct = False
     
     if st.session_state.password_correct:
         return True
     
-    # 암호 입력 페이지
-    st.title("🔐 접근 권한")
+    # パスワード入力ページ
+    st.title("🔐 アクセス権限")
     st.markdown("---")
     
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.subheader("암호를 입력하세요")
+        st.subheader("パスワードを入力してください")
         password = st.text_input(
-            "암호",
+            "パスワード",
             type="password",
-            placeholder="숫자로 입력하세요"
+            placeholder="数字で入力してください"
         )
         
-        if st.button("입력", use_container_width=True):
+        if st.button("入力", use_container_width=True):
             if password == "0708":
                 st.session_state.password_correct = True
-                st.success("✅ 접근 승인되었습니다!")
+                st.success("✅ アクセスが承認されました！")
                 st.rerun()
             else:
-                st.error("❌ 암호가 잘못되었습니다.")
+                st.error("❌ パスワードが間違っています。")
     
     st.stop()
 
 
-# 암호 확인
+# パスワード確認
 check_password()
 
 
 def load_keywords():
-    """키워드 파일에서 검색어를 불러옵니다."""
+    """キーワードファイルから検索語を読み込みます。"""
     try:
         with open('keywords.json', 'r', encoding='utf-8') as f:
             data = json.load(f)
@@ -69,12 +69,12 @@ def load_keywords():
 
 
 def format_date_japanese(date):
-    """날짜를 M/D 형식으로 변환합니다."""
+    """日付をM/D形式に変換します。"""
     return f"{date.month}/{date.day}"
 
 
 def get_date_range(days_ago):
-    """지정된 날짜 범위를 반환합니다."""
+    """指定された日付範囲を返します。"""
     if days_ago == 'all':
         return [datetime.date.today() - datetime.timedelta(days=i) for i in range(7)]
     else:
@@ -82,7 +82,7 @@ def get_date_range(days_ago):
 
 
 def scrape_yahoo_news(keyword, days_ago='0'):
-    """Yahoo News Japan에서 키워드를 검색합니다."""
+    """Yahooニュースジャパンでキーワードを検索します。"""
     url = f"https://news.yahoo.co.jp/search?p={keyword}&rkf=2&ei=UTF-8"
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
@@ -125,14 +125,14 @@ def scrape_yahoo_news(keyword, days_ago='0'):
                     })
 
     except Exception as e:
-        st.error(f"Yahoo News 검색 오류: {e}")
+        st.error(f"Yahooニュース検索エラー: {e}")
     
     found_articles.sort(key=lambda x: x['publish_time'], reverse=True)
     return found_articles
 
 
 def scrape_prtimes(keyword, days_ago='0'):
-    """PR Times에서 키워드를 검색합니다."""
+    """PR Timesでキーワードを検索します。"""
     search_keyword = keyword.replace(' ', '+')
     url = f"https://prtimes.jp/main/action.php?run=html&page=searchkey&search_word={search_keyword}"
     
@@ -203,16 +203,16 @@ def scrape_prtimes(keyword, days_ago='0'):
                 continue
     
     except Exception as e:
-        st.error(f"PR Times 검색 오류: {e}")
+        st.error(f"PR Times検索エラー: {e}")
     
     found_articles.sort(key=lambda x: x['publish_time'], reverse=True)
     return found_articles
 
 
 def display_articles(articles):
-    """기사 목록을 표시합니다."""
+    """記事リストを表示します。"""
     if not articles:
-        st.info("검색된 기사가 없습니다.")
+        st.info("検索された記事はありません。")
         return
     
     for article in articles:
@@ -234,60 +234,60 @@ def display_articles(articles):
             st.divider()
 
 
-# 메인 앱
-st.title("📰 뉴스 검색기")
-st.markdown("Yahoo News & PR Times에서 뉴스를 검색하세요")
+# メインアプリ
+st.title("📰 ニュース検索")
+st.markdown("Yahooニュース & PR Timesでニュースを検索")
 
-# 사이드바 설정
+# サイドバー設定
 with st.sidebar:
-    st.header("⚙️ 검색 설정")
+    st.header("⚙️ 検索設定")
     
     date_options = [
-        ("오늘", "0"),
-        ("어제", "1"),
-        ("2일 전", "2"),
-        ("3일 전", "3"),
-        ("전체 (7일)", "all")
+        ("今日", "0"),
+        ("昨日", "1"),
+        ("2日前", "2"),
+        ("3日前", "3"),
+        ("全て (7日間)", "all")
     ]
     date_selected = st.selectbox(
-        "📅 검색 기간",
+        "📅 検索期間",
         range(len(date_options)),
         format_func=lambda i: date_options[i][0]
     )
     days_ago = date_options[date_selected][1]
     
     source_options = [
-        ("🔀 둘 다", "both"),
-        ("🔔 Yahoo News만", "yahoo"),
-        ("📢 PR Times만", "prtimes")
+        ("🔀 両方", "both"),
+        ("🔔 Yahooニュースのみ", "yahoo"),
+        ("📢 PR Timesのみ", "prtimes")
     ]
     source_selected = st.selectbox(
-        "📡 검색 소스",
+        "📡 検索ソース",
         range(len(source_options)),
         format_func=lambda i: source_options[i][0]
     )
     source = source_options[source_selected][1]
 
-# 메인 콘텐츠
-tab1, tab2, tab3 = st.tabs(["🔍 키워드 검색", "📝 새 키워드", "🌐 전체 검색"])
+# メインコンテンツ
+tab1, tab2, tab3 = st.tabs(["🔍 キーワード検索", "📝 新しいキーワード", "🌐 全体検索"])
 
 with tab1:
-    st.subheader("등록된 키워드로 검색")
+    st.subheader("登録済みキーワードで検索")
     keywords = load_keywords()
     
-    selected_keyword = st.selectbox("키워드 선택", keywords, key="keyword_select")
+    selected_keyword = st.selectbox("キーワード選択", keywords, key="keyword_select")
     
-    if st.button("🔍 검색", key="search_btn1"):
-        with st.spinner("검색 중..."):
+    if st.button("🔍 検索", key="search_btn1"):
+        with st.spinner("検索中..."):
             yahoo_results = [] if source == 'prtimes' else scrape_yahoo_news(selected_keyword, days_ago)
             prtimes_results = [] if source == 'yahoo' else scrape_prtimes(selected_keyword, days_ago)
             all_results = yahoo_results + prtimes_results
         
-        st.success(f"'{selected_keyword}' 검색 완료!")
-        st.metric("총 기사 수", len(all_results), f"Yahoo: {len(yahoo_results)} | PR Times: {len(prtimes_results)}")
+        st.success(f"'{selected_keyword}' 検索完了！")
+        st.metric("合計記事数", len(all_results), f"Yahoo: {len(yahoo_results)} | PR Times: {len(prtimes_results)}")
         
         if source == 'both' and (yahoo_results or prtimes_results):
-            result_tab1, result_tab2, result_tab3 = st.tabs(["📄 전체", "🔔 Yahoo", "📢 PR Times"])
+            result_tab1, result_tab2, result_tab3 = st.tabs(["📄 全て", "🔔 Yahoo", "📢 PR Times"])
             with result_tab1:
                 display_articles(all_results)
             with result_tab2:
@@ -298,21 +298,21 @@ with tab1:
             display_articles(all_results)
 
 with tab2:
-    st.subheader("새로운 키워드로 검색")
-    new_keyword = st.text_input("키워드 입력", placeholder="예: AKB48, 乃木坂...")
+    st.subheader("新しいキーワードで検索")
+    new_keyword = st.text_input("キーワード入力", placeholder="例: AKB48, 乃木坂...")
     
-    if st.button("🔍 검색", key="search_btn2"):
+    if st.button("🔍 検索", key="search_btn2"):
         if new_keyword:
-            with st.spinner("검색 중..."):
+            with st.spinner("検索中..."):
                 yahoo_results = [] if source == 'prtimes' else scrape_yahoo_news(new_keyword, days_ago)
                 prtimes_results = [] if source == 'yahoo' else scrape_prtimes(new_keyword, days_ago)
                 all_results = yahoo_results + prtimes_results
             
-            st.success(f"'{new_keyword}' 검색 완료!")
-            st.metric("총 기사 수", len(all_results), f"Yahoo: {len(yahoo_results)} | PR Times: {len(prtimes_results)}")
+            st.success(f"'{new_keyword}' 検索完了！")
+            st.metric("合計記事数", len(all_results), f"Yahoo: {len(yahoo_results)} | PR Times: {len(prtimes_results)}")
             
             if source == 'both' and (yahoo_results or prtimes_results):
-                result_tab1, result_tab2, result_tab3 = st.tabs(["📄 전체", "🔔 Yahoo", "📢 PR Times"])
+                result_tab1, result_tab2, result_tab3 = st.tabs(["📄 全て", "🔔 Yahoo", "📢 PR Times"])
                 with result_tab1:
                     display_articles(all_results)
                 with result_tab2:
@@ -322,14 +322,14 @@ with tab2:
             else:
                 display_articles(all_results)
         else:
-            st.warning("키워드를 입력해주세요.")
+            st.warning("キーワードを入力してください。")
 
 with tab3:
-    st.subheader("모든 키워드 검색")
+    st.subheader("全てのキーワードを検索")
     keywords = load_keywords()
     
-    if st.button(f"🔍 {len(keywords)}개 키워드 모두 검색", key="search_btn3"):
-        with st.spinner("전체 검색 중..."):
+    if st.button(f"🔍 {len(keywords)}個のキーワードを全て検索", key="search_btn3"):
+        with st.spinner("全体検索中..."):
             all_keywords_results = {}
             total_count = 0
             
@@ -345,10 +345,10 @@ with tab3:
                 
                 progress_bar.progress((idx + 1) / len(keywords))
         
-        st.success(f"전체 검색 완료!")
-        st.metric("총 기사 수", total_count)
+        st.success(f"全体検索完了！")
+        st.metric("合計記事数", total_count)
         
         for keyword in keywords:
             if keyword in all_keywords_results:
-                with st.expander(f"**{keyword}** ({len(all_keywords_results[keyword])}개)"):
+                with st.expander(f"**{keyword}** ({len(all_keywords_results[keyword])}個)", expanded=True):
                     display_articles(all_keywords_results[keyword])
