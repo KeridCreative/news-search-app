@@ -20,19 +20,18 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    /* === Reset & Global === */
     .stApp {
         font-family: 'Inter', -apple-system, sans-serif;
         background: #f5f6fa;
     }
     #MainMenu, footer, header { visibility: hidden; }
 
-    /* === Hero === */
+    /* Hero */
     .hero {
         background: linear-gradient(135deg, #6366f1, #8b5cf6, #a78bfa);
         border-radius: 20px;
-        padding: 36px 32px 28px;
-        margin-bottom: 24px;
+        padding: 32px 28px 24px;
+        margin-bottom: 20px;
         color: white;
         position: relative;
         overflow: hidden;
@@ -40,90 +39,31 @@ st.markdown("""
     .hero::after {
         content: '';
         position: absolute;
-        width: 200px; height: 200px;
+        width: 180px; height: 180px;
         background: rgba(255,255,255,0.08);
         border-radius: 50%;
-        top: -60px; right: -40px;
+        top: -50px; right: -30px;
     }
-    .hero h1 { font-size: 1.6em; font-weight: 800; margin: 0; position: relative; }
-    .hero p { font-size: 0.9em; opacity: 0.8; margin: 6px 0 0; position: relative; }
+    .hero h1 { font-size: 1.5em; font-weight: 800; margin: 0; position: relative; }
+    .hero p { font-size: 0.85em; opacity: 0.8; margin: 4px 0 0; position: relative; }
 
-    /* === Control Bar (source + date) === */
-    .ctrl-bar {
-        background: white;
-        border: 1px solid #e8eaf0;
-        border-radius: 16px;
-        padding: 20px 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-    }
-    .ctrl-row {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-    }
-    .ctrl-label {
-        font-size: 0.75em;
-        font-weight: 700;
-        color: #6366f1;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        margin-bottom: 8px;
-    }
-    .pill-group { display: flex; gap: 6px; flex-wrap: wrap; }
-    .pill {
-        display: inline-flex;
-        align-items: center;
-        padding: 6px 16px;
-        border-radius: 100px;
-        font-size: 0.82em;
-        font-weight: 600;
-        cursor: pointer;
-        border: 2px solid #e8eaf0;
-        background: white;
-        color: #64748b;
-        transition: all 0.15s;
-        white-space: nowrap;
-    }
-    .pill.active {
-        background: #6366f1;
-        color: white;
-        border-color: #6366f1;
-    }
-    .pill:hover:not(.active) {
-        border-color: #a5b4fc;
-        background: #f5f3ff;
-        color: #6366f1;
-    }
-
-    /* === Search Box === */
-    .search-box {
-        background: white;
-        border: 1px solid #e8eaf0;
-        border-radius: 16px;
-        padding: 20px 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
-    }
-
-    /* === Stats === */
+    /* Stats */
     .stats-row {
         display: flex;
-        gap: 12px;
-        margin-bottom: 20px;
+        gap: 10px;
+        margin-bottom: 16px;
     }
     .stat-pill {
         flex: 1;
         background: white;
         border: 1px solid #e8eaf0;
         border-radius: 14px;
-        padding: 16px;
+        padding: 14px;
         text-align: center;
-        box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
     }
     .stat-pill .sp-num {
-        font-size: 1.8em;
+        font-size: 1.7em;
         font-weight: 800;
         line-height: 1;
         color: #1e293b;
@@ -131,94 +71,26 @@ st.markdown("""
     .stat-pill .sp-num.c-yahoo { color: #ef4444; }
     .stat-pill .sp-num.c-pr { color: #0ea5e9; }
     .stat-pill .sp-label {
-        font-size: 0.7em;
+        font-size: 0.68em;
         font-weight: 600;
         color: #94a3b8;
         text-transform: uppercase;
         letter-spacing: 0.5px;
-        margin-top: 4px;
+        margin-top: 3px;
     }
 
-    /* === Source Filter Tabs === */
-    .source-tabs {
-        display: flex;
-        gap: 0;
-        margin-bottom: 16px;
-        background: #f1f5f9;
-        border-radius: 12px;
-        padding: 4px;
-    }
-    .src-tab {
-        flex: 1;
-        text-align: center;
-        padding: 10px 16px;
-        font-size: 0.85em;
-        font-weight: 600;
-        color: #64748b;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: all 0.15s;
-    }
-    .src-tab.active {
-        background: white;
-        color: #1e293b;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    }
-    .src-tab .tab-count {
-        font-size: 0.8em;
-        font-weight: 700;
-        margin-left: 4px;
-        opacity: 0.6;
-    }
-
-    /* === Keyword Toggle Chips === */
-    .kw-chips {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 20px;
-    }
-    .kw-chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 6px 14px;
-        border-radius: 100px;
-        font-size: 0.8em;
-        font-weight: 600;
-        border: 2px solid #e2e8f0;
-        background: white;
-        color: #475569;
-        cursor: pointer;
-        transition: all 0.15s;
-    }
-    .kw-chip.on {
-        background: #6366f1;
-        color: white;
-        border-color: #6366f1;
-    }
-    .kw-chip .chip-count {
-        background: rgba(0,0,0,0.1);
-        padding: 1px 7px;
-        border-radius: 100px;
-        font-size: 0.85em;
-    }
-    .kw-chip.on .chip-count {
-        background: rgba(255,255,255,0.25);
-    }
-
-    /* === Article Card === */
+    /* Article Card */
     .a-card {
         background: white;
         border: 1px solid #e8eaf0;
         border-radius: 14px;
-        padding: 18px 22px;
-        margin-bottom: 10px;
+        padding: 16px 20px;
+        margin-bottom: 8px;
         transition: all 0.15s;
         border-left: 4px solid transparent;
     }
     .a-card:hover {
-        box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 14px rgba(0,0,0,0.05);
         transform: translateY(-1px);
     }
     .a-card.src-yahoo { border-left-color: #ef4444; }
@@ -227,32 +99,25 @@ st.markdown("""
         display: flex;
         justify-content: space-between;
         align-items: flex-start;
-        gap: 12px;
+        gap: 10px;
     }
     .a-card .a-title {
         flex: 1;
-        font-size: 0.92em;
+        font-size: 0.9em;
         font-weight: 600;
-        line-height: 1.55;
+        line-height: 1.5;
         color: #1e293b;
     }
-    .a-card .a-title a {
-        color: inherit;
-        text-decoration: none;
-    }
+    .a-card .a-title a { color: inherit; text-decoration: none; }
     .a-card .a-title a:hover { color: #6366f1; }
     .a-card .a-meta {
         display: flex;
-        gap: 14px;
-        margin-top: 8px;
-        font-size: 0.78em;
+        gap: 12px;
+        margin-top: 6px;
+        font-size: 0.75em;
         color: #94a3b8;
     }
-    .a-card .a-meta span {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
+    .a-card .a-meta span { display: flex; align-items: center; gap: 4px; }
     .badge-s {
         padding: 2px 10px;
         border-radius: 100px;
@@ -264,68 +129,55 @@ st.markdown("""
     .badge-s.b-yahoo { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; }
     .badge-s.b-pr { background: #f0f9ff; color: #0284c7; border: 1px solid #bae6fd; }
 
-    /* === Keyword Section === */
+    /* Keyword Section Header */
     .kw-sec {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 12px 18px;
+        padding: 10px 16px;
         background: #f8fafc;
-        border-radius: 12px;
-        margin: 20px 0 10px;
+        border-radius: 10px;
+        margin: 16px 0 8px;
         border: 1px solid #e8eaf0;
     }
-    .kw-sec .kw-n { font-weight: 700; color: #1e293b; font-size: 1em; }
+    .kw-sec .kw-n { font-weight: 700; color: #1e293b; font-size: 0.95em; }
     .kw-sec .kw-c {
         background: #6366f1;
         color: white;
-        padding: 3px 12px;
+        padding: 2px 10px;
         border-radius: 100px;
-        font-size: 0.78em;
+        font-size: 0.75em;
         font-weight: 700;
     }
 
-    /* === Empty === */
-    .empty { text-align: center; padding: 48px 20px; color: #94a3b8; }
-    .empty .e-icon { font-size: 2.5em; margin-bottom: 10px; }
+    /* Empty */
+    .empty { text-align: center; padding: 40px 20px; color: #94a3b8; }
+    .empty .e-icon { font-size: 2.5em; margin-bottom: 8px; }
 
-    /* === Streamlit Overrides === */
+    /* Streamlit Overrides */
     .stButton > button {
-        background: linear-gradient(135deg, #6366f1, #8b5cf6);
-        color: white;
-        border: none;
-        border-radius: 12px;
-        padding: 10px 24px;
+        border-radius: 10px;
         font-weight: 600;
-        font-size: 0.88em;
-        box-shadow: 0 2px 8px rgba(99,102,241,0.25);
+        font-size: 0.85em;
         transition: all 0.15s;
     }
-    .stButton > button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 14px rgba(99,102,241,0.35);
-    }
     .stTextInput > div > div > input {
-        border-radius: 12px;
+        border-radius: 10px;
         border: 2px solid #e2e8f0;
-        padding: 10px 14px;
-        font-size: 0.9em;
+        padding: 8px 12px;
+        font-size: 0.88em;
     }
     .stTextInput > div > div > input:focus {
         border-color: #6366f1;
         box-shadow: 0 0 0 3px rgba(99,102,241,0.1);
     }
-    .stSelectbox > div > div { border-radius: 12px; }
 
-    /* Sidebar light override */
     section[data-testid="stSidebar"] { background: #f8fafc; }
 
-    /* Responsive */
     @media (max-width: 768px) {
-        .hero { padding: 24px 20px 20px; }
-        .hero h1 { font-size: 1.3em; }
+        .hero { padding: 20px 16px 16px; }
+        .hero h1 { font-size: 1.2em; }
         .stats-row { flex-direction: column; }
-        .ctrl-row { flex-direction: column; align-items: stretch; }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -373,7 +225,7 @@ def scrape_yahoo(kw, dates):
                 if title_el and link_el:
                     arts.append({'title': title_el.text.strip(), 'link': link_el.get('href','#'),
                                  'media': media_el.text.strip() if media_el else 'N/A',
-                                 'publish_time': dtxt.strip(), 'source': 'Yahoo'})
+                                 'publish_time': dtxt.strip(), 'source': 'Yahoo', 'keyword': kw})
     except: pass
     arts.sort(key=lambda x: x['publish_time'], reverse=True)
     return arts
@@ -415,7 +267,7 @@ def scrape_prtimes(kw, dates):
                 arts.append({'title': rel.get('title',''),
                              'link': f"https://prtimes.jp{ru}" if ru.startswith('/') else ru,
                              'media': rel.get('companyName','N/A'),
-                             'publish_time': ra, 'source': 'PR Times'})
+                             'publish_time': ra, 'source': 'PR Times', 'keyword': kw})
     except: pass
     return arts
 
@@ -440,7 +292,19 @@ def render_card(a):
     </div>""", unsafe_allow_html=True)
 
 # ============================================================
+# MAIN APP
+# ============================================================
 keywords = load_keywords()
+
+# --- Session State Init ---
+if 'kw_multi' not in st.session_state:
+    st.session_state.kw_multi = []
+if 'search_results' not in st.session_state:
+    st.session_state.search_results = {}
+if 'vis_kw_multi' not in st.session_state:
+    st.session_state.vis_kw_multi = []
+if 'search_done' not in st.session_state:
+    st.session_state.search_done = False
 
 # === HERO ===
 st.markdown("""<div class="hero">
@@ -448,14 +312,13 @@ st.markdown("""<div class="hero">
     <p>Yahoo News Japan & PR Times에서 실시간 아이돌 뉴스를 한눈에</p>
 </div>""", unsafe_allow_html=True)
 
-# === CONTROLS: Source + Date in one bar ===
+# === CONTROLS: Source + Date ===
 c1, c2 = st.columns([1, 1])
 with c1:
     src = st.radio("🌐 검색 소스", ["Yahoo News", "PR Times", "둘 다"], horizontal=True, key="src_r")
 with c2:
     dm = st.radio("📅 기간 모드", ["누적 기간", "특정 날짜"], horizontal=True, key="dm_r")
 
-# Date options
 if dm == "누적 기간":
     opts = {"오늘":0, "~어제":1, "~3일":3, "~5일":5, "~7일":7}
     sel = st.select_slider("기간", list(opts.keys()), value="~7일", key="cum_sl")
@@ -477,119 +340,167 @@ dates = get_date_range(dmk, dv)
 
 st.markdown("---")
 
-# === SEARCH: Unified ===
-search_type = st.radio("검색 방법", ["🔍 키워드 선택", "✏️ 직접 입력", "📋 전체 검색"], horizontal=True, label_visibility="collapsed", key="st_r")
+# === SEARCH MODE ===
+search_mode = st.radio("검색 방법", ["🔍 키워드 선택", "✏️ 직접 입력"], horizontal=True, label_visibility="collapsed", key="sm_r")
 
-do_search = False
-do_all = False
-kw_to_search = None
+if search_mode == "🔍 키워드 선택":
+    # --- Keyword Toggle Buttons ---
+    st.markdown("##### 검색할 키워드 선택")
 
-if search_type == "🔍 키워드 선택":
-    c_s, c_b = st.columns([5, 1])
-    with c_s:
-        kw_to_search = st.selectbox("키워드", ["-- 선택 --"] + keywords, label_visibility="collapsed", key="kw_s")
-        if kw_to_search == "-- 선택 --": kw_to_search = None
-    with c_b:
-        st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
-        do_search = st.button("검색", key="b1", use_container_width=True)
-elif search_type == "✏️ 직접 입력":
+    # Select All / Deselect All buttons
+    ctrl_cols = st.columns([1, 1, 4])
+    with ctrl_cols[0]:
+        if st.button("✅ 전체 선택", key="sel_all", use_container_width=True):
+            st.session_state.kw_multi = list(keywords)
+            st.rerun()
+    with ctrl_cols[1]:
+        if st.button("⬜ 전체 해제", key="desel_all", use_container_width=True):
+            st.session_state.kw_multi = []
+            st.rerun()
+    with ctrl_cols[2]:
+        cnt = len(st.session_state.kw_multi)
+        st.caption(f"선택됨: **{cnt}** / {len(keywords)}")
+
+    # Keyword toggle grid - multiselect (state managed via key='kw_multi')
+    st.multiselect(
+        "키워드",
+        options=keywords,
+        label_visibility="collapsed",
+        key="kw_multi"
+    )
+
+    selected_kws = st.session_state.kw_multi
+
+    # Search button
+    if selected_kws:
+        do_search = st.button(
+            f"🔍 선택한 {len(selected_kws)}개 키워드 검색",
+            key="search_btn",
+            use_container_width=True
+        )
+    else:
+        st.info("검색할 키워드를 선택하세요.")
+        do_search = False
+
+    # Execute search
+    if do_search and selected_kws:
+        all_results = {}
+        prog = st.progress(0)
+        stat = st.empty()
+
+        for i, kw in enumerate(selected_kws):
+            stat.markdown(f"**`{kw}`** 검색 중... ({i+1}/{len(selected_kws)})")
+            arts = search_all(kw, dates, src)
+            if arts:
+                all_results[kw] = arts
+            prog.progress((i+1)/len(selected_kws))
+
+        stat.empty()
+        prog.empty()
+
+        st.session_state.search_results = all_results
+        st.session_state.vis_kw_multi = list(all_results.keys())
+        st.session_state.search_done = True
+        st.rerun()
+
+elif search_mode == "✏️ 직접 입력":
     c_i, c_b = st.columns([5, 1])
     with c_i:
         inp = st.text_input("키워드", placeholder="예: AKB48, 乃木坂, TWICE...", label_visibility="collapsed", key="kw_i")
-        kw_to_search = inp.strip() if inp else None
     with c_b:
         st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
-        do_search = st.button("검색", key="b2", use_container_width=True)
-else:  # 전체 검색
-    st.info(f"등록된 **{len(keywords)}개** 키워드를 한 번에 검색합니다.")
-    do_all = st.button("🔍 전체 검색 시작", key="b3", use_container_width=True)
+        do_direct = st.button("검색", key="b_direct", use_container_width=True)
 
-# === RESULTS ===
+    if do_direct and inp and inp.strip():
+        kw = inp.strip()
+        with st.spinner(f"'{kw}' 검색 중..."):
+            arts = search_all(kw, dates, src)
+        st.session_state.search_results = {kw: arts} if arts else {}
+        st.session_state.vis_kw_multi = [kw] if arts else []
+        st.session_state.search_done = True
+        st.rerun()
 
-def show_results(articles, is_multi=False, all_results=None):
-    """Display results with source tabs and keyword toggles"""
-    if not articles:
+# ============================================================
+# RESULTS DISPLAY
+# ============================================================
+if st.session_state.search_done and st.session_state.search_results:
+    results = st.session_state.search_results
+    all_articles = []
+    for arts in results.values():
+        all_articles.extend(arts)
+
+    if not all_articles:
         st.markdown('<div class="empty"><div class="e-icon">🔍</div><p>검색된 기사가 없습니다</p></div>', unsafe_allow_html=True)
-        return
-
-    yahoo_n = sum(1 for a in articles if a['source'] == 'Yahoo')
-    pr_n = sum(1 for a in articles if a['source'] == 'PR Times')
-
-    # Stats
-    st.markdown(f"""<div class="stats-row">
-        <div class="stat-pill"><div class="sp-num">{len(articles)}</div><div class="sp-label">Total</div></div>
-        <div class="stat-pill"><div class="sp-num c-yahoo">{yahoo_n}</div><div class="sp-label">Yahoo News</div></div>
-        <div class="stat-pill"><div class="sp-num c-pr">{pr_n}</div><div class="sp-label">PR Times</div></div>
-    </div>""", unsafe_allow_html=True)
-
-    # Source filter tabs
-    src_filter = st.radio("소스 필터", ["전체", f"Yahoo ({yahoo_n})", f"PR Times ({pr_n})"],
-                          horizontal=True, label_visibility="collapsed", key="src_filter")
-
-    # Filter by source
-    if "Yahoo" in src_filter:
-        filtered = [a for a in articles if a['source'] == 'Yahoo']
-    elif "PR Times" in src_filter:
-        filtered = [a for a in articles if a['source'] == 'PR Times']
     else:
-        filtered = articles
+        st.markdown("---")
 
-    # Keyword toggles (for multi-keyword results)
-    if is_multi and all_results:
-        st.markdown("##### 키워드 필터")
-        # Create columns for keyword toggle buttons
-        kw_list = list(all_results.keys())
+        # --- Stats ---
+        yahoo_n = sum(1 for a in all_articles if a['source'] == 'Yahoo')
+        pr_n = sum(1 for a in all_articles if a['source'] == 'PR Times')
+        st.markdown(f"""<div class="stats-row">
+            <div class="stat-pill"><div class="sp-num">{len(all_articles)}</div><div class="sp-label">Total</div></div>
+            <div class="stat-pill"><div class="sp-num c-yahoo">{yahoo_n}</div><div class="sp-label">Yahoo News</div></div>
+            <div class="stat-pill"><div class="sp-num c-pr">{pr_n}</div><div class="sp-label">PR Times</div></div>
+        </div>""", unsafe_allow_html=True)
 
-        # Use multiselect as toggle
-        active_kws = st.multiselect(
-            "표시할 키워드",
-            options=kw_list,
-            default=kw_list,
-            format_func=lambda x: f"{x} ({len(all_results[x])})",
-            label_visibility="collapsed",
-            key="kw_toggle"
-        )
+        # --- Source Filter ---
+        src_filter = st.radio("소스 필터", ["전체", f"Yahoo ({yahoo_n})", f"PR Times ({pr_n})"],
+                              horizontal=True, label_visibility="collapsed", key="src_filter")
 
-        # Filter by active keywords
-        filtered = [a for a in filtered if any(
-            a in all_results.get(kw, []) for kw in active_kws
-        )]
+        # --- Keyword Result Toggle Buttons ---
+        if len(results) > 1:
+            st.markdown("##### 키워드별 결과 필터")
 
-        # Show keyword section headers
-        for kw in active_kws:
-            kw_arts = [a for a in all_results[kw] if a in filtered]
-            if kw_arts:
+            # Toggle All / None for results
+            r_ctrl = st.columns([1, 1, 4])
+            with r_ctrl[0]:
+                if st.button("✅ 모두 표시", key="show_all_r", use_container_width=True):
+                    st.session_state.vis_kw_multi = list(results.keys())
+                    st.rerun()
+            with r_ctrl[1]:
+                if st.button("⬜ 모두 숨기기", key="hide_all_r", use_container_width=True):
+                    st.session_state.vis_kw_multi = []
+                    st.rerun()
+
+            # Keyword toggle via multiselect (state managed via key='vis_kw_multi')
+            kw_opts = list(results.keys())
+            st.multiselect(
+                "표시할 키워드",
+                options=kw_opts,
+                format_func=lambda x: f"{x} ({len(results[x])}건)",
+                label_visibility="collapsed",
+                key="vis_kw_multi"
+            )
+            visible_kws = set(st.session_state.vis_kw_multi)
+        else:
+            visible_kws = set(results.keys())
+
+        # --- Display Articles ---
+        if not visible_kws:
+            st.markdown('<div class="empty"><div class="e-icon">👆</div><p>표시할 키워드를 선택하세요</p></div>', unsafe_allow_html=True)
+        else:
+            for kw in results:
+                if kw not in visible_kws:
+                    continue
+                kw_articles = results[kw]
+
+                # Apply source filter
+                if "Yahoo" in src_filter:
+                    kw_articles = [a for a in kw_articles if a['source'] == 'Yahoo']
+                elif "PR Times" in src_filter:
+                    kw_articles = [a for a in kw_articles if a['source'] == 'PR Times']
+
+                if not kw_articles:
+                    continue
+
+                # Keyword section header
                 st.markdown(f"""<div class="kw-sec">
                     <span class="kw-n">{kw}</span>
-                    <span class="kw-c">{len(kw_arts)}건</span>
+                    <span class="kw-c">{len(kw_articles)}건</span>
                 </div>""", unsafe_allow_html=True)
-                for a in kw_arts:
+
+                for a in kw_articles:
                     render_card(a)
-    else:
-        for a in filtered:
-            render_card(a)
 
-# --- Execute Search ---
-if do_search and kw_to_search:
-    with st.spinner(f"'{kw_to_search}' 검색 중..."):
-        results = search_all(kw_to_search, dates, src)
-    show_results(results)
-
-if do_all:
-    all_results = {}
-    total_arts = []
-    prog = st.progress(0)
-    stat = st.empty()
-
-    for i, kw in enumerate(keywords):
-        stat.markdown(f"**`{kw}`** 검색 중... ({i+1}/{len(keywords)})")
-        arts = search_all(kw, dates, src)
-        if arts:
-            all_results[kw] = arts
-            total_arts.extend(arts)
-        prog.progress((i+1)/len(keywords))
-
-    stat.empty()
-    prog.empty()
-
-    show_results(total_arts, is_multi=True, all_results=all_results)
+elif st.session_state.search_done and not st.session_state.search_results:
+    st.markdown('<div class="empty"><div class="e-icon">🔍</div><p>검색된 기사가 없습니다</p></div>', unsafe_allow_html=True)
