@@ -1,0 +1,176 @@
+[
+  {
+    "group_name": "乃木坂46",
+    "classification": "坂道系列（坂道グループ）",
+    "category": "Sakamichi 系列",
+    "search_keyword": "乃木坂"
+  },
+  {
+    "group_name": "櫻坂46",
+    "classification": "坂道系列（坂道グループ）",
+    "category": "Sakamichi 系列",
+    "search_keyword": "櫻坂"
+  },
+  {
+    "group_name": "日向坂46",
+    "classification": "坂道系列（坂道グループ）",
+    "category": "Sakamichi 系列",
+    "search_keyword": "日向坂"
+  },
+  {
+    "group_name": "AKB48",
+    "classification": "AKB48 グループ",
+    "category": "AKB48 系列",
+    "search_keyword": "AKB"
+  },
+  {
+    "group_name": "HKT48",
+    "classification": "AKB48 グループ",
+    "category": "AKB48 系列",
+    "search_keyword": "HKT"
+  },
+  {
+    "group_name": "STU48",
+    "classification": "AKB48 グループ",
+    "category": "AKB48 系列",
+    "search_keyword": "STU"
+  },
+  {
+    "group_name": "NMB48",
+    "classification": "AKB48 グループ",
+    "category": "AKB48 系列",
+    "search_keyword": "NMB"
+  },
+  {
+    "group_name": "SKE48",
+    "classification": "AKB48 グループ",
+    "category": "AKB48 系列",
+    "search_keyword": "SKE"
+  },
+  {
+    "group_name": "NGT48",
+    "classification": "AKB48 グループ",
+    "category": "AKB48 系列",
+    "search_keyword": "NGT"
+  },
+  {
+    "group_name": "=LOVE",
+    "classification": "アイドルプロジェクト／プロデュースアイドル",
+    "category": "Sashihara Produced 系列",
+    "search_keyword": "イコラブ"
+  },
+  {
+    "group_name": "≠ME",
+    "classification": "アイドルプロジェクト／プロデュースアイドル",
+    "category": "Sashihara Produced 系列",
+    "search_keyword": "ノイミー"
+  },
+  {
+    "group_name": "≒JOY",
+    "classification": "アイドルプロジェクト／プロデュースアイドル",
+    "category": "Sashihara Produced 系列",
+    "search_keyword": "ニアジョイ"
+  },
+  {
+    "group_name": "FRUITS ZIPPER",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "Kawaii Lab 系列",
+    "search_keyword": "FRUITS ZIPPER"
+  },
+  {
+    "group_name": "CUTIE STREET",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "Kawaii Lab 系列",
+    "search_keyword": "CUTIE STREET"
+  },
+  {
+    "group_name": "CANDY TUNE",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "Kawaii Lab 系列",
+    "search_keyword": "CANDY TUNE"
+  },
+  {
+    "group_name": "SWEET STEADY",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "Kawaii Lab 系列",
+    "search_keyword": "SWEET STEADY"
+  },
+  {
+    "group_name": "モーニング娘。'25",
+    "classification": "ハロー！プロジェクト",
+    "category": "Hello! Project 系列",
+    "search_keyword": "モー娘"
+  },
+  {
+    "group_name": "OCHA NORMA",
+    "classification": "ハロー！プロジェクト",
+    "category": "Hello! Project 系列",
+    "search_keyword": "OCHA NORMA"
+  },
+  {
+    "group_name": "iLiFE!",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "iLiFE!"
+  },
+  {
+    "group_name": "高嶺のなでしこ",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "高嶺のなでしこ"
+  },
+  {
+    "group_name": "ive",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "ive"
+  },
+  {
+    "group_name": "twice",
+    "classification": "インディアイドル／オルタナティブアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "twice"
+  },
+  {
+    "group_name": "aespa",
+    "classification": "メディアミックスアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "aespa"
+  },
+  {
+    "group_name": "ILLIT",
+    "classification": "オタク系アイドル／ニッチアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "ILLIT"
+  },
+  {
+    "group_name": "NiziU",
+    "classification": "ロック／オルタナティブアイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "NiziU"
+  },
+  {
+    "group_name": "QWER",
+    "classification": "ロック／エレクトロニック系アイドル",
+    "category": "その他／インディ系",
+    "search_keyword": "QWER"
+  },
+  {
+    "group_name": "fav me",
+    "classification": "ユニーク系アイドル／パフォーマンスアート",
+    "category": "その他／インディ系",
+    "search_keyword": "fav me"
+  },
+  {
+    "group_name": "超ときめき♡宣伝部",
+    "classification": "ユニーク系アイドル／パフォーマンスアート",
+    "category": "スターダストプロモーション",
+    "search_keyword": "超ときめき"
+  },
+  {
+    "group_name": "log you",
+    "classification": "新進アイドル／インディアイドル",
+    "category": "Kawaii Lab 系列",
+    "search_keyword": "log you"
+  }
+]
