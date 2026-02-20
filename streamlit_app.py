@@ -140,19 +140,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- Japanese Language Detection for Chrome Translate ---
-st.markdown("""
-<script>
-    (function() {
-        document.documentElement.lang = 'ja';
-        var meta = document.createElement('meta');
-        meta.httpEquiv = 'Content-Language';
-        meta.content = 'ja';
-        document.head.appendChild(meta);
-    })();
-</script>
-""", unsafe_allow_html=True)
-
 # --- File Path ---
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 KEYWORDS_FILE = os.path.join(BASE_DIR, 'keywords.json')
